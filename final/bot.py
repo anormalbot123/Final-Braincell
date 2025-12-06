@@ -4,7 +4,6 @@ from discord.ext import commands
 from random import randint
 import random
 from logic import * 
-import os
 
 
 intents = discord.Intents.default()
@@ -26,19 +25,22 @@ async def quiz(ctx):
     ans_list = get_answers(ind)
     rihgt_ans = get_right_ans(ind)
 
-    num_right = ans_list.index(rihgt_ans)
+    num_right = ans_list.index(rihgt_ans) + 1
 
     await ctx.send(quest)
     await ctx.send("Aqui las posibles respuestas:")
 
-    for i in range(len(ans_list)):
-        await ctx.send(f"{i + 1}) {ans_list[i]}")
+    message_list = ""
 
-    # mssg es un objecto, para el contenido seria 
-    # mssg.content
+    for i in range(len(ans_list)):
+        message_list += f"{i}) " + ans_list[i] + "\n"
+
+    await ctx.send(message_list)
+
 
     def check(msg):
         return msg.author == ctx.author and msg.channel == ctx.channel
+
 
     try:
         await ctx.send("listo para recibir tu respuesta")
@@ -49,14 +51,13 @@ async def quiz(ctx):
         return
     
 
-    #verificar respuesta
     try: 
         user_ans = int(mssg.content)
 
     except:
         await ctx.send("hubo un error")
         return
-
+    
 
     if user_ans == num_right:
         await ctx.send("asi es!")
@@ -69,10 +70,23 @@ async def quiz(ctx):
 
 @bot.command()
 async def meme(ctx):
-    with open(f'memes/{random.choice(meme_list)}', 'rb') as f:
-        picture = discord.file(f)
+    choosen_one = random.choice(meme_list)
+
+    with open(f'memes/{choosen_one}', 'rb') as f:
+
+        # es File pq es una clase FFFFF
+
+        picture = discord.File(f)
     
     await ctx.send(file=picture)
 
 
+@bot.command()
+async def facto(ctx):
+    await ctx.send(random.choice(fact_list))
+
+
+
+
 bot.run(settings["token"])
+
