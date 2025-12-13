@@ -1,6 +1,8 @@
 from random import shuffle
 from typing import List
 import os
+import pyttsx3
+import requests
 
 list_questions =    [
                     {"question0": "¿Cuál de los siguientes acuerdos es un compromiso global para limitar el calentamiento?", "answers": ["Pacto de Ginebra", "Convenio de Toronto", "Tratado de Múnich"], "right": "Acuerdo de París"},
@@ -13,13 +15,13 @@ list_questions =    [
 
 meme_list = os.listdir('memes')
 
-fact_list = ["",
-             "",
-             "",
-             "",
-             "",
-             "",
-             ""]
+fact_list = ["El CO₂ permanece en la atmósfera por siglos",
+             "El oceano absorbe la mayoria de CO₂",
+             "El hielo del Ártico se está derritiendo a una velocidad que no se veía en al menos 1.000 años",
+             "Las olas de calor marinas también existen",
+             "Las plantas producen menos nutrientes esenciales bajo niveles altos de CO₂",
+             "El nivel del mar está subiendo más rápido que en cualquier momento de los últimos 3.000 años",
+             "El cambio climático está alterando sonidos naturales"]
 
 
 def get_question(num_Question):
